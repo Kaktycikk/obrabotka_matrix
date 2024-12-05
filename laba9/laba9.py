@@ -48,9 +48,7 @@ def start_game_X():  # Начало игры для крестиков
     button_height = 3
     window_width = button_width * 3  # 3 кнопки по горизонтали
     window_height = button_height * 3  # 3 кнопки по вертикали
-
-    # Устанавливаем окно игры на 500x500 для более комфортного отображения
-    center_window(game_window, 600, 400)  # Центрируем окно игры с более комфортными размерами
+    center_window(game_window, 600, 400)  
 
     for i in range(3):
         for j in range(3):
@@ -76,8 +74,7 @@ def start_game_O():  # Функция для начала игры с нолик
     window_width = button_width * 3  # 3 кнопки по горизонтали
     window_height = button_height * 3  # 3 кнопки по вертикали
 
-    # Устанавливаем окно игры на 500x500 для более комфортного отображения
-    center_window(game_window, 600, 400)  # Центрируем окно игры с более комфортными размерами
+    center_window(game_window, 600, 400)  
 
     for i in range(3):  # Создание кнопок для игрового поля
         for j in range(3):
