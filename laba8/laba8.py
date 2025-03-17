@@ -94,14 +94,9 @@ def main_gui():
 
     window = tk.Tk()
     window.title("Меню")
-
-    # Устанавливаем размер окна
-    window.geometry("400x300")  # Размер окна (ширина x высота)
-
-    # Центрируем окно на экране
+    window.geometry("400x300")  
     window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
 
-    # Кнопки интерфейса
     load_button = tk.Button(window, text="Загрузить тарифы", command=lambda: load_tariffs_gui(manager))
     load_button.pack(pady=20)
 
