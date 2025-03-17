@@ -3,13 +3,11 @@
 def is_valid_hex_number(num_str):
     """Проверяет, является ли строка шестнадцатеричным нечётным числом, начинающимся с 'А' и не превышающим 4096."""
     try:
-        # Проверка наличия знака минуса и соответствие формату
         if num_str.startswith('-'):
-            num_str = num_str[1:]  # Убираем знак минуса для дальнейшей проверки
+            num_str = num_str[1:]  
         if not num_str.startswith('A') or not all(c in '0123456789ABCDEF' for c in num_str):
             return False
-        decimal_value = int(num_str, 16)  # Преобразование в десятичное число
-        # Проверка условий: нечётность и не превышает 4096
+        decimal_value = int(num_str, 16)  
         return abs(decimal_value) % 2 != 0 and abs(decimal_value) <= 0x1000
     except ValueError:
         return False
@@ -24,15 +22,13 @@ def convert_to_words_hex(num_str):
         'E': 'четырнадцать', 'F': 'пятнадцать'
     }
     sign = "минус " if num_str.startswith('-') else ""
-    num_str = num_str.lstrip('-')  # Убираем знак для обработки
+    num_str = num_str.lstrip('-')
     return sign + ' '.join(digit_to_word_hex[char.upper()] for char in num_str if char.upper() in digit_to_word_hex)
 
 
 def process_file(filename):
     with open(filename, 'r', encoding='utf-8') as file:
-        # Чтение файла и разбиение на слова с учетом строк
         content = file.read().split()
-        # Фильтрация и преобразование в шестнадцатеричные числа
         hex_numbers = [obj for obj in content if is_valid_hex_number(obj)]
 
         total_objects = len(content)
@@ -44,15 +40,13 @@ def process_file(filename):
             print("Файл пуст или не содержит объектов.")
 
         if hex_numbers:
-            # Найти минимальное число (учитывая знак)
             min_hex = min(hex_numbers, key=lambda x: int(x, 16))
             print(f"Минимальное число: {min_hex} ({convert_to_words_hex(min_hex)})")
         else:
             print("Шестнадцатеричные числа, соответствующие критериям, не найдены.")
 
 
-# Пример использования
-filename = 'input.txt'  # Убедитесь, что файл 'input.txt' существует и содержит тестовые данные
+filename = 'input.txt'  
 process_file(filename)
 
 
