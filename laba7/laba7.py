@@ -2,62 +2,51 @@ from tkinter import *
 from tkinter import messagebox
 from itertools import product
 
-# Функция для вычисления минимальной стоимости костюма
 def calculate_min_cost_costume(P, B, R, G, price_dict):
     min_cost = float('inf')
     best_costume = None
-    for costume in product(P, B, R, G):  # Все возможные комбинации
+    for costume in product(P, B, R, G): 
         total_cost = sum(price_dict[item] for item in costume)
         if total_cost < min_cost:
             min_cost = total_cost
             best_costume = costume
     return best_costume, min_cost
 
-# Функция, которая вызывается при нажатии на кнопку "Вычислить"
 def on_calculate_button_click(window, p_input, b_input, r_input, g_input, p_prices, b_prices, r_prices, g_prices):
     try:
-        # Ввод товаров
         P = p_input.get("1.0", "end-1c").split()
         B = b_input.get("1.0", "end-1c").split()
         R = r_input.get("1.0", "end-1c").split()
         G = g_input.get("1.0", "end-1c").split()
 
-        # Ввод цен
         p_prices_list = p_prices.get("1.0", "end-1c").split()
         b_prices_list = b_prices.get("1.0", "end-1c").split()
         r_prices_list = r_prices.get("1.0", "end-1c").split()
         g_prices_list = g_prices.get("1.0", "end-1c").split()
 
-        # Проверка на соответствие количеству предметов
         if len(p_prices_list) != len(P) or len(b_prices_list) != len(B) or len(r_prices_list) != len(R) or len(g_prices_list) != len(G):
             messagebox.showwarning("Ошибка!", "Количество цен должно соответствовать количеству предметов!")
             return
 
-        # Создаем соответствие между предметами и ценами
         price_dict = {item: int(price) for item, price in zip(P + B + R + G, p_prices_list + b_prices_list + r_prices_list + g_prices_list)}
 
-        # Проверка на пустые данные
         if not P or not B or not R or not G or not price_dict:
             messagebox.showwarning("Ошибка!", "Заполните все поля данных!")
             return
 
-        # Рассчитываем минимальный костюм
         best_costume, min_cost = calculate_min_cost_costume(P, B, R, G, price_dict)
 
-        # Закрываем окно ввода перед открытием окна вывода
         window.destroy()
 
-        # Выводим результат
         output_window(best_costume, min_cost, P, B, R, G)
 
     except ValueError:
         messagebox.showwarning("Ошибка!", "Пожалуйста, введите правильные данные!")
 
-# Окно вывода с результатами
 def output_window(best_costume, min_cost, P, B, R, G):
     output_window = Tk()
     output_window.title("Результаты расчёта")
-    center_window(output_window, 800, 600)  # Увеличено до 800x600
+    center_window(output_window, 800, 600) 
 
     frame = Frame(output_window, bg="lightgray")
     frame.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.98)
@@ -76,7 +65,6 @@ def output_window(best_costume, min_cost, P, B, R, G):
 
     output_window.mainloop()
 
-# Функция для центрирования окна на экране
 def center_window(window, width, height):
     window.update_idletasks()
     screen_width = window.winfo_screenwidth()
@@ -85,11 +73,10 @@ def center_window(window, width, height):
     y = (screen_height - height) // 2
     window.geometry(f"{width}x{height}+{x}+{y}")
 
-# Основное окно ввода данных
 def enter_window():
     window = Tk()
     window.title("Окно ввода данных")
-    center_window(window, 800, 800)  # Увеличено до 800x800
+    center_window(window, 800, 800)
     window.resizable(width=False, height=False)
 
     frame = Frame(window, bg="lightgray")
@@ -143,5 +130,4 @@ def enter_window():
     calculate_button.pack(pady=20)
     window.mainloop()
 
-# Запуск программы
 enter_window()
